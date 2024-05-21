@@ -19,11 +19,13 @@ const Home: NextPage<HomeProps> = async () => {
   return (
     <div className="flex h-screen animate-fadeIn flex-col pl-20">
       <h1>Rick and Morty Api</h1>
-      <input type="text" className="rounded-lg border-slate-500 border w-80 h-12 px-2" />
+      <input type="text" className="rounded-lg border-slate-500 border w-80 h-12 px-2 shadow-lg shadow-slate-300 mb-2" />
+      
       <ul className="border border-slate-500 h-[27rem] w-80 overflow-auto rounded-lg">
         {characters.map((character) => (
           <li key={character.id} className="flex border-b border-slate-500 ">
 
+            <input type="checkbox" className="ml-2" />
             <div className="flex items-center justify-center p-2">
               <Image
                 src={character.image}
