@@ -8,7 +8,7 @@ export const useQuery = async () => {
     characters.push(...data.results);
   }
 
-  // Map to store the character with the most episodes for each name
+  // Map to store the character with the most episodes 
   const characterMap = new Map<string, any>();
 
   characters.forEach((character) => {
