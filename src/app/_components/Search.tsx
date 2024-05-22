@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { type Character } from "@/lib/types";
 import { useState, useEffect, useRef } from "react";
+import { getHighlightedText } from "@/lib/helpers/getHighlightedText";
 
 type SearchProps = {
   characters: Character[];
@@ -55,7 +56,7 @@ const Search = ({ characters }: SearchProps) => {
     ) {
       setSearchTerm("");
       setFocusedIndex(null);
-      inputRef.current.blur(); // Remove focus from input
+      inputRef.current.blur();
     }
   };
 
@@ -80,23 +81,6 @@ const Search = ({ characters }: SearchProps) => {
     character.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const getHighlightedText = (text: string, highlight: string) => {
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-    return (
-      <span>
-        {parts.map((part, index) =>
-          part.toLowerCase() === highlight.toLowerCase() ? (
-            <span key={index} className="font-semibold">
-              {part}
-            </span>
-          ) : (
-            part
-          ),
-        )}
-      </span>
-    );
-  };
-
   const handleCharacterSelect = (characterName: string) => {
     setSelectedCharacters((prev) => {
       if (prev.includes(characterName)) {
@@ -111,7 +95,7 @@ const Search = ({ characters }: SearchProps) => {
   const handleListItemClick = (characterName: string) => {
     handleCharacterSelect(characterName);
     setSearchTerm("");
-    inputRef.current?.blur(); // Remove focus from input
+    inputRef.current;
   };
 
   const handleRemoveCharacter = (characterName: string) => {
@@ -149,7 +133,7 @@ const Search = ({ characters }: SearchProps) => {
       </div>
       {searchTerm && (
         <ul
-          className={`bg-white absolute left-0 top-full h-fit max-h-[27rem] w-80 overflow-auto rounded-lg border border-slate-500 transition-opacity duration-300 ease-out ${
+          className={`absolute left-0 top-full h-fit max-h-[27rem] w-80 overflow-auto rounded-lg border border-slate-500 bg-white transition-opacity duration-300 ease-out ${
             searchTerm ? "opacity-1 block" : "hidden opacity-0"
           }`}
           ref={listRef}
