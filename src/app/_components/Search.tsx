@@ -24,9 +24,11 @@ const Search = ({ characters }: SearchProps) => {
       if (focusedIndex !== null) {
         const selectedCharacter = filteredCharacters[focusedIndex];
         handleCharacterSelect(selectedCharacter.name);
+        setSearchTerm("");
       }
     } else if (event.key === "Escape") {
       setSearchTerm("");
+      inputRef.current?.blur(); // Remove focus from input
     } else if (event.key === "ArrowDown") {
       event.preventDefault();
       setFocusedIndex((prevIndex) =>
@@ -53,6 +55,7 @@ const Search = ({ characters }: SearchProps) => {
     ) {
       setSearchTerm("");
       setFocusedIndex(null);
+      inputRef.current.blur(); // Remove focus from input
     }
   };
 
@@ -107,6 +110,8 @@ const Search = ({ characters }: SearchProps) => {
 
   const handleListItemClick = (characterName: string) => {
     handleCharacterSelect(characterName);
+    setSearchTerm("");
+    inputRef.current?.blur(); // Remove focus from input
   };
 
   const handleRemoveCharacter = (characterName: string) => {
@@ -121,7 +126,7 @@ const Search = ({ characters }: SearchProps) => {
         type="text"
         className="mb-1 h-12 w-80 rounded-lg border border-slate-500 px-2 shadow-lg shadow-slate-300"
         placeholder="Search characters..."
-        //   value={selectedCharacters.join(', ') + (searchTerm ? `, ${searchTerm}` : '')}
+        value={searchTerm}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         ref={inputRef}
@@ -144,7 +149,7 @@ const Search = ({ characters }: SearchProps) => {
       </div>
       {searchTerm && (
         <ul
-          className={`absolute left-0 top-full h-fit max-h-[27rem] w-80 overflow-auto rounded-lg border border-slate-500 transition-opacity duration-300 ease-out ${
+          className={`bg-white absolute left-0 top-full h-fit max-h-[27rem] w-80 overflow-auto rounded-lg border border-slate-500 transition-opacity duration-300 ease-out ${
             searchTerm ? "opacity-1 block" : "hidden opacity-0"
           }`}
           ref={listRef}
