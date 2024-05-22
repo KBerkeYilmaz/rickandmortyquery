@@ -37,14 +37,14 @@ const Search = ({ characters }: SearchProps) => {
       setFocusedIndex((prevIndex) =>
         prevIndex === null || prevIndex === filteredCharacters.length - 1
           ? 0
-          : prevIndex + 1
+          : prevIndex + 1,
       );
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       setFocusedIndex((prevIndex) =>
         prevIndex === null || prevIndex === 0
           ? filteredCharacters.length - 1
-          : prevIndex - 1
+          : prevIndex - 1,
       );
     }
   };
@@ -80,7 +80,7 @@ const Search = ({ characters }: SearchProps) => {
   }, [focusedIndex]);
 
   const filteredCharacters = characters.filter((character) =>
-    character.name.toLowerCase().includes(searchTerm.toLowerCase())
+    character.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleCharacterSelect = (characterName: string) => {
@@ -103,7 +103,7 @@ const Search = ({ characters }: SearchProps) => {
 
   const handleRemoveCharacter = (characterName: string) => {
     setSelectedCharacters((prev) =>
-      prev.filter((name) => name !== characterName)
+      prev.filter((name) => name !== characterName),
     );
     inputRef.current?.focus();
   };
@@ -112,12 +112,13 @@ const Search = ({ characters }: SearchProps) => {
     <div className="relative">
       <input
         type="text"
-        className="mb-1 h-12 w-80 rounded-lg border border-slate-500 px-2 shadow-lg shadow-slate-300"
-        placeholder="Search characters..."
         value={searchTerm}
+        placeholder="Search for a character..."
+        className="mb-1 h-12 w-80 rounded-lg border border-slate-500 px-2 shadow-lg shadow-slate-300 focus:outline-offset-0"
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         ref={inputRef}
+        id="search-input"
       />
       <div className="mb-2 flex flex-wrap">
         {selectedCharacters.map((name) => (
@@ -151,8 +152,10 @@ const Search = ({ characters }: SearchProps) => {
             filteredCharacters.map((character, index) => (
               <li
                 key={character.id}
-                className={`flex cursor-pointer border-b border-slate-500 ${
-                  focusedIndex === index ? "bg-slate-200" : ""
+                className={`flex cursor-pointer border-b border-slate-500 hover:bg-slate-200 ${
+                  focusedIndex === index
+                    ? "bg-slate-200 focus:outline-none"
+                    : ""
                 }`}
                 tabIndex={0}
                 onKeyDown={handleKeyDown}
