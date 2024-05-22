@@ -18,15 +18,12 @@ const Search = ({ characters }: SearchProps) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    if (filteredCharacters.length === 1) {
-      setFocusedIndex(0);
-    } else {
-      setFocusedIndex(null);
-    }
+    setFocusedIndex(null);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
+      event.preventDefault();
       if (focusedIndex !== null) {
         const selectedCharacter = filteredCharacters[focusedIndex];
         handleCharacterSelect(selectedCharacter.name);
@@ -40,14 +37,14 @@ const Search = ({ characters }: SearchProps) => {
       setFocusedIndex((prevIndex) =>
         prevIndex === null || prevIndex === filteredCharacters.length - 1
           ? 0
-          : prevIndex + 1,
+          : prevIndex + 1
       );
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       setFocusedIndex((prevIndex) =>
         prevIndex === null || prevIndex === 0
           ? filteredCharacters.length - 1
-          : prevIndex - 1,
+          : prevIndex - 1
       );
     }
   };
@@ -83,7 +80,7 @@ const Search = ({ characters }: SearchProps) => {
   }, [focusedIndex]);
 
   const filteredCharacters = characters.filter((character) =>
-    character.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    character.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleCharacterSelect = (characterName: string) => {
@@ -106,7 +103,7 @@ const Search = ({ characters }: SearchProps) => {
 
   const handleRemoveCharacter = (characterName: string) => {
     setSelectedCharacters((prev) =>
-      prev.filter((name) => name !== characterName),
+      prev.filter((name) => name !== characterName)
     );
     inputRef.current?.focus();
   };
@@ -157,7 +154,7 @@ const Search = ({ characters }: SearchProps) => {
                 className={`flex cursor-pointer border-b border-slate-500 ${
                   focusedIndex === index ? "bg-slate-200" : ""
                 }`}
-                tabIndex={-1}
+                tabIndex={0}
                 onKeyDown={handleKeyDown}
                 onClick={() => handleListItemClick(character.name)}
               >
