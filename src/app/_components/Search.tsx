@@ -18,6 +18,11 @@ const Search = ({ characters }: SearchProps) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+    if (filteredCharacters.length === 1) {
+      setFocusedIndex(0);
+    } else {
+      setFocusedIndex(null);
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -90,18 +95,20 @@ const Search = ({ characters }: SearchProps) => {
       }
     });
     setSearchTerm("");
+    inputRef.current?.focus();
   };
 
   const handleListItemClick = (characterName: string) => {
     handleCharacterSelect(characterName);
     setSearchTerm("");
-    inputRef.current;
+    inputRef.current?.focus();
   };
 
   const handleRemoveCharacter = (characterName: string) => {
     setSelectedCharacters((prev) =>
       prev.filter((name) => name !== characterName),
     );
+    inputRef.current?.focus();
   };
 
   return (
